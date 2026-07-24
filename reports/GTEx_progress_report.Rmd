@@ -1,0 +1,346 @@
+---
+title: "GTEx Skeletal Muscle Ageing and ERV Project"
+subtitle: "MSc dissertation progress report"
+author: "Taka Kato"
+date: "24 July 2026"
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    toc_float: true
+    theme: flatly
+    df_print: paged
+---
+
+<style>
+body {
+  color: #20252b;
+  font-size: 16px;
+  line-height: 1.48;
+}
+h1 {
+  border-bottom: 2px solid #1f4e79;
+  color: #17365d;
+  padding-bottom: 0.25rem;
+  margin-top: 2.2rem;
+}
+h2 {
+  color: #1f4e79;
+  margin-top: 1.6rem;
+}
+.lead {
+  color: #4b5563;
+  font-size: 1.05rem;
+  margin-bottom: 1.2rem;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 1rem 0 1.5rem 0;
+}
+.metric {
+  background: #f4f7fa;
+  border-left: 5px solid #1f77b4;
+  border-radius: 5px;
+  padding: 14px 12px;
+}
+.metric .value {
+  color: #17365d;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+.metric .label {
+  color: #5b6570;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(110px, 1fr));
+  gap: 8px;
+  margin: 1rem 0 1.6rem 0;
+}
+.pipeline div {
+  background: #eef4f8;
+  border: 1px solid #c9d8e5;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  padding: 10px 8px;
+  text-align: center;
+}
+.figure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.figure-grid img,
+.figure-wide img {
+  background: white;
+  border: 1px solid #d9dee3;
+  border-radius: 4px;
+  height: auto;
+  padding: 4px;
+  width: 100%;
+}
+.figure-wide {
+  margin: 0.8rem auto 1.3rem auto;
+  max-width: 980px;
+}
+.caption {
+  color: #58616b;
+  font-size: 0.86rem;
+  margin: 0.35rem 0 1.1rem 0;
+}
+.finding {
+  background: #fff8e6;
+  border-left: 5px solid #e6a700;
+  border-radius: 4px;
+  margin: 1rem 0;
+  padding: 10px 14px;
+}
+.note {
+  background: #f8f9fa;
+  border-left: 5px solid #7a8793;
+  border-radius: 4px;
+  color: #454d55;
+  margin-top: 1.2rem;
+  padding: 10px 14px;
+}
+table {
+  font-size: 0.88rem;
+}
+th {
+  background: #eaf1f7;
+  color: #17365d;
+}
+@media (max-width: 900px) {
+  .metric-grid,
+  .pipeline,
+  .figure-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+
+<p class="lead">
+Age-associated co-expression networks and genomic ERV annotations in GTEx v10 skeletal muscle.
+</p>
+
+<div class="pipeline">
+  <div><b>GTEx v10</b><br>RNA-seq counts</div>
+  <div><b>Preprocessing</b><br>filter + VST</div>
+  <div><b>WGCNA</b><br>signed network</div>
+  <div><b>Age modules</b><br>7 candidates</div>
+  <div><b>ERV positions</b><br>promoter + distance</div>
+  <div><b>Integration</b><br>hubs + enhancers</div>
+</div>
+
+# 1. Dataset and preprocessing
+
+<div class="metric-grid">
+  <div class="metric"><div class="value">818</div><div class="label">skeletal muscle samples</div></div>
+  <div class="metric"><div class="value">59,033</div><div class="label">input genes</div></div>
+  <div class="metric"><div class="value">43,186</div><div class="label">after count filtering</div></div>
+  <div class="metric"><div class="value">20,000</div><div class="label">top genes by MAD for WGCNA</div></div>
+</div>
+
+| Step | Setting / output |
+|---|---:|
+| Count filter | row sum >= 50 |
+| Transformation | DESeq2 VST (`design = ~ 1`) |
+| Network | signed |
+| Soft-thresholding power | 6 |
+| Minimum module size | 30 |
+| Merge cut height | 0.25 |
+| Detected modules | 32 + grey |
+
+<div class="figure-wide">
+  <img src="figures/02_soft_threshold_mad20k.png" alt="Soft-threshold analysis">
+</div>
+<p class="caption">Soft-thresholding analysis. Power 6 was selected for the signed network.</p>
+
+# 2. Module-trait relationships
+
+Age was encoded as six ordered decade groups (20-29 to 70-79).
+
+<div class="figure-wide" style="max-width:760px">
+  <img src="figures/04_module_trait_relationships_mad20k_power6_fixed.png" alt="Module-trait correlation heatmap">
+</div>
+<p class="caption">Module eigengene correlations with AGE and SEX.</p>
+
+| Candidate module | Genes | AGE correlation | AGE P value |
+|---|---:|---:|---:|
+| greenyellow | 445 | 0.387 | 1.18e-30 |
+| red | 630 | -0.350 | 6.17e-25 |
+| darkgreen | 119 | 0.099 | 4.45e-03 |
+| turquoise | 2,608 | 0.313 | 4.85e-20 |
+| midnightblue | 328 | 0.277 | 6.79e-16 |
+| blue | 2,499 | 0.215 | 5.32e-10 |
+| pink | 606 | 0.224 | 8.68e-11 |
+
+<div class="finding"><b>Largest positive AGE correlation:</b> greenyellow, r = 0.387.</div>
+
+# 3. GenAge overlap
+
+<div class="metric-grid">
+  <div class="metric"><div class="value">191</div><div class="label">GenAge genes in WGCNA</div></div>
+  <div class="metric"><div class="value">3</div><div class="label">GenAge genes among 210 hubs</div></div>
+  <div class="metric"><div class="value">10</div><div class="label">pink module overlaps</div></div>
+  <div class="metric"><div class="value">0 / 7</div><div class="label">modules significant at FDR &lt; 0.05</div></div>
+</div>
+
+<div class="figure-wide">
+  <img src="figures/06_GenAge_enrichment_light.png" alt="GenAge enrichment">
+</div>
+<p class="caption">GenAge enrichment across the seven candidate modules.</p>
+
+| Module | GenAge overlap | Odds ratio | FDR |
+|---|---:|---:|---:|
+| pink | 10 | 1.779 | 0.466 |
+| red | 9 | 1.526 | 0.528 |
+| darkgreen | 2 | 1.779 | 0.735 |
+| greenyellow | 5 | 1.182 | 0.738 |
+| turquoise | 25 | 1.003 | 0.738 |
+| blue | 19 | 0.771 | 0.958 |
+| midnightblue | 1 | 0.314 | 0.958 |
+
+# 4. Module-level ERV annotation
+
+Promoter-proximal region: TSS -2,000 bp to +500 bp.
+
+<div class="metric-grid">
+  <div class="metric"><div class="value">19,968</div><div class="label">position-eligible genes</div></div>
+  <div class="metric"><div class="value">4,765</div><div class="label">genes with promoter ERV</div></div>
+  <div class="metric"><div class="value">23.86%</div><div class="label">background promoter ERV rate</div></div>
+  <div class="metric"><div class="value">8,174</div><div class="label">gene-ERV promoter pairs</div></div>
+</div>
+
+::: {.figure-grid}
+
+::: {.figure-panel}
+![Promoter ERV percentage](figures/Step10_promoter_ERV_percent.png)
+<p class="caption">Promoter ERV overlap by candidate module.</p>
+:::
+
+::: {.figure-panel}
+![Promoter ERV odds ratios](figures/Step10_promoter_ERV_forest.png)
+<p class="caption">Fisher's exact tests for promoter ERV enrichment or depletion.</p>
+:::
+
+:::
+
+<div class="finding"><b>pink:</b> 17.3% vs 24.1% in other genes; OR = 0.661, FDR = 0.00060.</div>
+
+::: {.figure-grid}
+
+::: {.figure-panel}
+![ERV family heatmap](figures/Step10_ERV_family_heatmap.png)
+<p class="caption">Family-specific promoter overlap. No family-module pair reached FDR &lt; 0.05.</p>
+:::
+
+::: {.figure-panel}
+![Nearest ERV distance](figures/Step10_nearest_ERV_distance_boxplot.png)
+<p class="caption">Distance from TSS to the nearest annotated ERV fragment.</p>
+:::
+
+:::
+
+| Module | Promoter ERV (%) | OR | FDR | Median nearest ERV (bp) | Distance FDR |
+|---|---:|---:|---:|---:|---:|
+| greenyellow | 24.5 | 1.036 | 0.783 | 3,877 | 0.754 |
+| red | 20.5 | 0.817 | 0.157 | 4,364 | 0.00723 |
+| darkgreen | 19.3 | 0.763 | 0.492 | 5,739 | 0.0212 |
+| turquoise | 23.2 | 0.956 | 0.525 | 3,992 | 0.0377 |
+| midnightblue | 19.5 | 0.770 | 0.157 | 4,892 | 0.00348 |
+| blue | 24.1 | 1.014 | 0.783 | 3,742 | 0.121 |
+| pink | 17.3 | 0.661 | **0.00060** | 4,884 | **0.00268** |
+
+<div class="finding"><b>Nearest ERV distance:</b> red, darkgreen, turquoise, midnightblue and pink were significantly farther than other eligible genes (FDR &lt; 0.05).</div>
+
+# 5. Hub-gene integration
+
+<div class="metric-grid">
+  <div class="metric"><div class="value">210</div><div class="label">top hubs: 7 modules x 30</div></div>
+  <div class="metric"><div class="value">33</div><div class="label">hubs with promoter ERV (15.7%)</div></div>
+  <div class="metric"><div class="value">63</div><div class="label">hub-ERV promoter pairs</div></div>
+  <div class="metric"><div class="value">3</div><div class="label">GenAge hubs</div></div>
+</div>
+
+::: {.figure-grid}
+
+::: {.figure-panel}
+![Hub MM and GS scatter](figures/Step11_hub_MM_GS_ERV_scatter.png)
+<p class="caption">Module membership, age significance and promoter ERV status.</p>
+:::
+
+::: {.figure-panel}
+![Hub promoter ERV percentage](figures/Step11_hub_promoter_ERV_percent.png)
+<p class="caption">Promoter ERV overlap among the top 30 hubs per module.</p>
+:::
+
+:::
+
+| GenAge hub | Module | Rank | MM | GS-AGE | Promoter ERV | Nearest ERV |
+|---|---|---:|---:|---:|---|---:|
+| BSCL2 | red | 3 | 0.842 | -0.323 | No | 9,815 bp |
+| S100B | darkgreen | 24 | 0.738 | 0.089 | No | 2,010 bp |
+| PML | pink | 12 | 0.831 | 0.233 | No | 1,555 bp |
+
+<div class="figure-wide">
+  <img src="figures/Step12A_hub_ERV_genic_context.png" alt="Genic context of promoter ERVs">
+</div>
+<p class="caption">Most promoter-overlapping hub-ERV pairs were upstream of the annotated TSS.</p>
+
+# 6. Skeletal-muscle enhancer integration
+
+Roadmap E100 (Psoas muscle) and E108 (Skeletal muscle male).
+
+<div class="metric-grid">
+  <div class="metric"><div class="value">15,779</div><div class="label">enhancer-associated ERV fragments</div></div>
+  <div class="metric"><div class="value">4,418</div><div class="label">supported in both epigenomes</div></div>
+  <div class="metric"><div class="value">135 / 210</div><div class="label">hubs within 100 kb (64.3%)</div></div>
+  <div class="metric"><div class="value">63 / 210</div><div class="label">hubs near consensus ERVs (30.0%)</div></div>
+</div>
+
+::: {.figure-grid}
+
+::: {.figure-panel}
+![Enhancer ERV near hub genes](figures/Step12B_Roadmap_hub_enhancer_ERV_percent_by_module.png)
+<p class="caption">Hub genes with enhancer-associated ERVs within 100 kb.</p>
+:::
+
+::: {.figure-panel}
+![ERV families by Roadmap epigenome](figures/Step12B_Roadmap_ERV_family_by_epigenome.png)
+<p class="caption">Unique enhancer-associated ERV fragments by family and epigenome.</p>
+:::
+
+:::
+
+| Module | Hubs near enhancer ERV (%) | Consensus support (%) |
+|---|---:|---:|
+| greenyellow | 63.3 | 33.3 |
+| red | 60.0 | 40.0 |
+| darkgreen | 40.0 | 20.0 |
+| turquoise | 70.0 | 13.3 |
+| midnightblue | 56.7 | 26.7 |
+| blue | 80.0 | 46.7 |
+| pink | 80.0 | 30.0 |
+
+<div class="finding"><b>PML:</b> GenAge hub with three enhancer-associated ERV candidates within 100 kb; one was supported in both muscle epigenomes (minimum distance 11,962 bp).</div>
+
+# 7. Current status
+
+| Completed | Next |
+|---|---|
+| GTEx preprocessing | Postmortem covariate assessment |
+| WGCNA and module-trait analysis | ERV expression quantification |
+| GenAge annotation | Multivariable validation |
+| Promoter and nearest-ERV annotation | Final candidate prioritisation |
+| Hub and Roadmap enhancer integration | Dissertation figures and interpretation |
+
+<div class="note">
+<b>Interpretation:</b> Current ERV results are reference-genome positional annotations; they do not demonstrate ERV expression or regulatory activity. The source files are GTEx v10, although the repository README still contains an outdated v8 label.
+</div>
