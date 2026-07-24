@@ -1,0 +1,8 @@
+"module","hub_gene_n","enhancer_ERV_hub_n","enhancer_ERV_hub_percent","consensus_enhancer_ERV_hub_n","consensus_enhancer_ERV_hub_percent","promoter_and_enhancer_hub_n","median_minimum_distance"
+"greenyellow",30,19,63.3333333333333,10,33.3333333333333,0,42493
+"red",30,18,60,12,40,0,58374
+"darkgreen",30,12,40,6,20,0,48056.5
+"turquoise",30,21,70,4,13.3333333333333,0,38681
+"midnightblue",30,17,56.6666666666667,8,26.6666666666667,1,19236
+"blue",30,24,80,14,46.6666666666667,6,14002.5
+"pink",30,24,80,9,30,1,17863.5

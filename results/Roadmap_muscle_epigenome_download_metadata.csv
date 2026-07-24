@@ -1,0 +1,3 @@
+"epigenome","tissue","filename","download_url","local_file"
+"E100","Psoas muscle","E100_18_core_K27ac_hg38lift_mnemonics.bed.gz","https://egg2.wustl.edu/roadmap/data/byFileType/chromhmmSegmentations/ChmmModels/core_K27ac/jointModel/final/E100_18_core_K27ac_hg38lift_mnemonics.bed.gz","raw/E100_18_core_K27ac_hg38lift_mnemonics.bed.gz"
+"E108","Skeletal muscle female","E108_18_core_K27ac_hg38lift_mnemonics.bed.gz","https://egg2.wustl.edu/roadmap/data/byFileType/chromhmmSegmentations/ChmmModels/core_K27ac/jointModel/final/E108_18_core_K27ac_hg38lift_mnemonics.bed.gz","raw/E108_18_core_K27ac_hg38lift_mnemonics.bed.gz"

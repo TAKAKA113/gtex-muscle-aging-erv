@@ -1,0 +1,2 @@
+"annotation_accession","file_accession","assembly","file_format","output_type","status","md5sum","file_size","download_url","local_file"
+"ENCSR530NDC","ENCFF049CXE","GRCh38","bed","candidate Cis-Regulatory Elements","released","a3237b526f17fa949cdca35867de1d01","32630246","https://www.encodeproject.org/files/ENCFF049CXE/@@download/ENCFF049CXE.bed.gz","raw/ENCODE_ENCSR530NDC_skeletal_muscle_cCREs_GRCh38.bed.gz"
