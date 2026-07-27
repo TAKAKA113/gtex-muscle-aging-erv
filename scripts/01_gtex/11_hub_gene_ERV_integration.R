@@ -50,15 +50,15 @@
 #
 # 出力：
 # clean/hub_gene_ERV_annotation_all.rds
-# results/hub_gene_ERV_annotation_all.csv
-# results/hub_promoter_ERV_pairs.csv
-# results/hub_ERV_summary_by_module.csv
-# results/hub_gene_ERV_priority.csv
-# results/hub_gene_ERV_priority_top20.csv
-# results/GenAge_hub_ERV_annotation.csv
-# results/pink_hub_ERV_annotation.csv
-# figures/Step11_hub_promoter_ERV_percent.pdf
-# figures/Step11_hub_MM_GS_ERV_scatter.pdf
+# results/01_gtex/tables/hub_gene_ERV_annotation_all.csv
+# results/01_gtex/tables/hub_promoter_ERV_pairs.csv
+# results/01_gtex/tables/hub_ERV_summary_by_module.csv
+# results/01_gtex/tables/hub_gene_ERV_priority.csv
+# results/01_gtex/tables/hub_gene_ERV_priority_top20.csv
+# results/01_gtex/tables/GenAge_hub_ERV_annotation.csv
+# results/01_gtex/tables/pink_hub_ERV_annotation.csv
+# results/01_gtex/figures/Step11_hub_promoter_ERV_percent.pdf
+# results/01_gtex/figures/Step11_hub_MM_GS_ERV_scatter.pdf
 # ============================================================
 
 
@@ -71,12 +71,14 @@ dir.create(
 )
 
 dir.create(
-  "results",
+  "results/01_gtex/tables",
+  recursive = TRUE,
   showWarnings = FALSE
 )
 
 dir.create(
-  "figures",
+  "results/01_gtex/figures",
+  recursive = TRUE,
   showWarnings = FALSE
 )
 
@@ -313,7 +315,7 @@ if (any(is.na(hub_match_index))) {
   
   write.csv(
     unmatched_hubs,
-    "results/unmatched_hub_genes_ERV_integration.csv",
+    "results/01_gtex/tables/unmatched_hub_genes_ERV_integration.csv",
     row.names = FALSE
   )
   
@@ -643,49 +645,49 @@ saveRDS(
 
 write.csv(
   hub_annotated,
-  "results/hub_gene_ERV_annotation_all.csv",
+  "results/01_gtex/tables/hub_gene_ERV_annotation_all.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_promoter_ERV_pairs,
-  "results/hub_promoter_ERV_pairs.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_pairs.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_module_summary,
-  "results/hub_ERV_summary_by_module.csv",
+  "results/01_gtex/tables/hub_ERV_summary_by_module.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_priority,
-  "results/hub_gene_ERV_priority.csv",
+  "results/01_gtex/tables/hub_gene_ERV_priority.csv",
   row.names = FALSE
 )
 
 write.csv(
   head(hub_priority, 20),
-  "results/hub_gene_ERV_priority_top20.csv",
+  "results/01_gtex/tables/hub_gene_ERV_priority_top20.csv",
   row.names = FALSE
 )
 
 write.csv(
   promoter_positive_hubs,
-  "results/promoter_positive_hub_genes.csv",
+  "results/01_gtex/tables/promoter_positive_hub_genes.csv",
   row.names = FALSE
 )
 
 write.csv(
   GenAge_hubs,
-  "results/GenAge_hub_ERV_annotation.csv",
+  "results/01_gtex/tables/GenAge_hub_ERV_annotation.csv",
   row.names = FALSE
 )
 
 write.csv(
   pink_hubs,
-  "results/pink_hub_ERV_annotation.csv",
+  "results/01_gtex/tables/pink_hub_ERV_annotation.csv",
   row.names = FALSE
 )
 
@@ -752,7 +754,7 @@ hub_percent_plot <- ggplot(
 # 画面表示は行わず、直接PDFへ保存する
 
 ggsave(
-  filename = "figures/Step11_hub_promoter_ERV_percent.pdf",
+  filename = "results/01_gtex/figures/Step11_hub_promoter_ERV_percent.pdf",
   plot = hub_percent_plot,
   device = "pdf",
   width = 8,
@@ -829,7 +831,7 @@ hub_scatter_plot <- ggplot(
 # 画面表示は行わず、直接PDFへ保存する
 
 ggsave(
-  filename = "figures/Step11_hub_MM_GS_ERV_scatter.pdf",
+  filename = "results/01_gtex/figures/Step11_hub_MM_GS_ERV_scatter.pdf",
   plot = hub_scatter_plot,
   device = "pdf",
   width = 9,

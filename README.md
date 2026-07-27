@@ -10,7 +10,7 @@ This repository contains an MSc Bioinformatics dissertation project investigatin
 
 ## Dataset
 
-- **Project:** GTEx v8
+- **Project:** GTEx v10
 - **Tissue:** Muscle - Skeletal
 - **Samples:** 818
 - **Input:** Gene-level RNA-seq read counts
@@ -34,8 +34,14 @@ The WGCNA module detection, module-trait analysis and initial GenAge analysis ha
 
 ## Repository structure
 
-- `scripts/` — R scripts used in the analysis
-- `results/` — selected figures and summary tables
+- `scripts/01_gtex/` — GTEx analysis scripts
+- `scripts/02_additional_analysis/` — future additional analysis scripts
+- `scripts/03_integration/` — future integration scripts
+- `results/01_gtex/figures/` — GTEx figures
+- `results/01_gtex/tables/` — GTEx summary tables
+- `results/02_additional_analysis/` — future additional analysis outputs
+- `results/03_integration/` — future integrated outputs
+- `reports/` — progress and final reports
 - `data_description.md` — dataset and preprocessing information
 
 ## Note

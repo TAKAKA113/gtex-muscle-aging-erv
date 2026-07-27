@@ -1,7 +1,7 @@
 dir.create("raw")
 dir.create("meta")
 dir.create("clean")
-dir.create("results")
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
 list.files()
 
 #

@@ -76,9 +76,11 @@
 # 出力：
 # clean/RepeatMasker_hg38_LTR_GRCh38.rds
 # clean/RepeatMasker_hg38_ERV_GRCh38.rds
-# results/RepeatMasker_hg38_LTR_family_counts.csv
-# results/RepeatMasker_hg38_ERV_family_counts.csv
+# results/01_gtex/tables/RepeatMasker_hg38_LTR_family_counts.csv
+# results/01_gtex/tables/RepeatMasker_hg38_ERV_family_counts.csv
 # ============================================================
+
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
 
 
 ## Step 1
@@ -546,19 +548,19 @@ saveRDS(
 # family別summary
 write.csv(
   ltr_family_summary,
-  "results/RepeatMasker_hg38_LTR_family_counts.csv",
+  "results/01_gtex/tables/RepeatMasker_hg38_LTR_family_counts.csv",
   row.names = FALSE
 )
 
 write.csv(
   erv_family_summary,
-  "results/RepeatMasker_hg38_ERV_family_counts.csv",
+  "results/01_gtex/tables/RepeatMasker_hg38_ERV_family_counts.csv",
   row.names = FALSE
 )
 
 write.csv(
   non_erv_ltr_family_summary,
-  "results/RepeatMasker_hg38_non_ERV_LTR_family_counts.csv",
+  "results/01_gtex/tables/RepeatMasker_hg38_non_ERV_LTR_family_counts.csv",
   row.names = FALSE
 )
 
@@ -659,8 +661,6 @@ write.csv(
   as.data.frame(
     table(erv_annotation_primary$repFamily)
   ),
-  "results/RepeatMasker_hg38_ERV_primary_family_counts.csv",
+  "results/01_gtex/tables/RepeatMasker_hg38_ERV_primary_family_counts.csv",
   row.names = FALSE
 )
-
-

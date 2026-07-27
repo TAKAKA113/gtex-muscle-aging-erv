@@ -37,21 +37,21 @@
 # clean/promoter_ERV_pairs_mad20k_power6.rds
 #
 # 出力：
-# results/target_module_promoter_ERV_fisher.csv
-# results/target_module_promoter_ERV_family_fisher.csv
-# results/target_module_nearest_ERV_distance_wilcoxon.csv
-# figures/Step10_promoter_ERV_percent.pdf
-# figures/Step10_promoter_ERV_forest.pdf
-# figures/Step10_ERV_family_heatmap.pdf
-# figures/Step10_nearest_ERV_distance_boxplot.pdf
+# results/01_gtex/tables/target_module_promoter_ERV_fisher.csv
+# results/01_gtex/tables/target_module_promoter_ERV_family_fisher.csv
+# results/01_gtex/tables/target_module_nearest_ERV_distance_wilcoxon.csv
+# results/01_gtex/figures/Step10_promoter_ERV_percent.pdf
+# results/01_gtex/figures/Step10_promoter_ERV_forest.pdf
+# results/01_gtex/figures/Step10_ERV_family_heatmap.pdf
+# results/01_gtex/figures/Step10_nearest_ERV_distance_boxplot.pdf
 # ============================================================
 
 
 ## Step 1
 # 出力フォルダを作る
 
-dir.create("results", showWarnings = FALSE)
-dir.create("figures", showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("results/01_gtex/figures", recursive = TRUE, showWarnings = FALSE)
 
 
 ## Step 2
@@ -339,7 +339,7 @@ print(overall_ERV_results)
 
 write.csv(
   overall_ERV_results,
-  "results/target_module_promoter_ERV_fisher.csv",
+  "results/01_gtex/tables/target_module_promoter_ERV_fisher.csv",
   row.names = FALSE
 )
 
@@ -400,7 +400,7 @@ promoter_percent_plot <- ggplot(
 print(promoter_percent_plot)
 
 ggsave(
-  filename = "figures/Step10_promoter_ERV_percent.pdf",
+  filename = "results/01_gtex/figures/Step10_promoter_ERV_percent.pdf",
   plot = promoter_percent_plot,
   width = 8,
   height = 5
@@ -463,7 +463,7 @@ forest_plot <- ggplot(
 print(forest_plot)
 
 ggsave(
-  filename = "figures/Step10_promoter_ERV_forest.pdf",
+  filename = "results/01_gtex/figures/Step10_promoter_ERV_forest.pdf",
   plot = forest_plot,
   width = 8,
   height = 5
@@ -614,7 +614,7 @@ print(family_ERV_results)
 
 write.csv(
   family_ERV_results,
-  "results/target_module_promoter_ERV_family_fisher.csv",
+  "results/01_gtex/tables/target_module_promoter_ERV_family_fisher.csv",
   row.names = FALSE
 )
 
@@ -682,7 +682,7 @@ family_heatmap <- ggplot(
 print(family_heatmap)
 
 ggsave(
-  filename = "figures/Step10_ERV_family_heatmap.pdf",
+  filename = "results/01_gtex/figures/Step10_ERV_family_heatmap.pdf",
   plot = family_heatmap,
   width = 7,
   height = 5
@@ -771,7 +771,7 @@ print(distance_results)
 
 write.csv(
   distance_results,
-  "results/target_module_nearest_ERV_distance_wilcoxon.csv",
+  "results/01_gtex/tables/target_module_nearest_ERV_distance_wilcoxon.csv",
   row.names = FALSE
 )
 
@@ -822,7 +822,7 @@ distance_boxplot <- ggplot(
 print(distance_boxplot)
 
 ggsave(
-  filename = "figures/Step10_nearest_ERV_distance_boxplot.pdf",
+  filename = "results/01_gtex/figures/Step10_nearest_ERV_distance_boxplot.pdf",
   plot = distance_boxplot,
   width = 8,
   height = 5
@@ -892,15 +892,15 @@ cat("==============================\n")
 # Step 10の統計結果を読み込む
 
 overall_ERV_results <- read.csv(
-  "results/target_module_promoter_ERV_fisher.csv"
+  "results/01_gtex/tables/target_module_promoter_ERV_fisher.csv"
 )
 
 family_ERV_results <- read.csv(
-  "results/target_module_promoter_ERV_family_fisher.csv"
+  "results/01_gtex/tables/target_module_promoter_ERV_family_fisher.csv"
 )
 
 distance_results <- read.csv(
-  "results/target_module_nearest_ERV_distance_wilcoxon.csv"
+  "results/01_gtex/tables/target_module_nearest_ERV_distance_wilcoxon.csv"
 )
 
 

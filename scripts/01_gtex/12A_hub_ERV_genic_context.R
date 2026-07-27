@@ -70,13 +70,13 @@
 #
 # 出力：
 # clean/hub_promoter_ERV_pairs_genic_context.rds
-# results/hub_promoter_ERV_pairs_genic_context.csv
-# results/hub_promoter_ERV_genic_context_summary.csv
-# results/hub_promoter_ERV_context_by_module.csv
-# results/hub_promoter_ERV_candidate_gene_summary.csv
-# results/hub_promoter_ERV_context_priority.csv
-# figures/Step12A_hub_ERV_genic_context.pdf
-# figures/Step12A_hub_ERV_context_by_module.pdf
+# results/01_gtex/tables/hub_promoter_ERV_pairs_genic_context.csv
+# results/01_gtex/tables/hub_promoter_ERV_genic_context_summary.csv
+# results/01_gtex/tables/hub_promoter_ERV_context_by_module.csv
+# results/01_gtex/tables/hub_promoter_ERV_candidate_gene_summary.csv
+# results/01_gtex/tables/hub_promoter_ERV_context_priority.csv
+# results/01_gtex/figures/Step12A_hub_ERV_genic_context.pdf
+# results/01_gtex/figures/Step12A_hub_ERV_context_by_module.pdf
 # ============================================================
 
 
@@ -84,8 +84,8 @@
 # 出力フォルダを作る
 
 dir.create("clean", showWarnings = FALSE)
-dir.create("results", showWarnings = FALSE)
-dir.create("figures", showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("results/01_gtex/figures", recursive = TRUE, showWarnings = FALSE)
 
 
 ## Step 2
@@ -358,7 +358,7 @@ missing_exon_genes <- setdiff(
 if (length(missing_exon_genes) > 0) {
   write.csv(
     data.frame(gene = missing_exon_genes),
-    "results/hub_genes_without_GENCODE_exons.csv",
+    "results/01_gtex/tables/hub_genes_without_GENCODE_exons.csv",
     row.names = FALSE
   )
   
@@ -816,31 +816,31 @@ saveRDS(
 
 write.csv(
   hub_pairs,
-  "results/hub_promoter_ERV_pairs_genic_context.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_pairs_genic_context.csv",
   row.names = FALSE
 )
 
 write.csv(
   context_summary,
-  "results/hub_promoter_ERV_genic_context_summary.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_genic_context_summary.csv",
   row.names = FALSE
 )
 
 write.csv(
   module_context_summary,
-  "results/hub_promoter_ERV_context_by_module.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_context_by_module.csv",
   row.names = FALSE
 )
 
 write.csv(
   gene_context_summary,
-  "results/hub_promoter_ERV_candidate_gene_summary.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_candidate_gene_summary.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_pairs_priority,
-  "results/hub_promoter_ERV_context_priority.csv",
+  "results/01_gtex/tables/hub_promoter_ERV_context_priority.csv",
   row.names = FALSE
 )
 
@@ -883,7 +883,7 @@ context_plot <- ggplot(
   theme_classic(base_size = 12)
 
 ggsave(
-  filename = "figures/Step12A_hub_ERV_genic_context.pdf",
+  filename = "results/01_gtex/figures/Step12A_hub_ERV_genic_context.pdf",
   plot = context_plot,
   device = "pdf",
   width = 8,
@@ -938,7 +938,7 @@ module_context_plot <- ggplot(
   )
 
 ggsave(
-  filename = "figures/Step12A_hub_ERV_context_by_module.pdf",
+  filename = "results/01_gtex/figures/Step12A_hub_ERV_context_by_module.pdf",
   plot = module_context_plot,
   device = "pdf",
   width = 9,

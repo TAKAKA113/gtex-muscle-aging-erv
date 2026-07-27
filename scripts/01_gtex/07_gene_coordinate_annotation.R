@@ -13,8 +13,10 @@
 #
 # 出力：
 # clean/geneModuleTable_with_GenAge_coordinates_mad20k_power6.rds
-# results/geneModuleTable_with_GenAge_coordinates_mad20k_power6.csv
+# results/01_gtex/tables/geneModuleTable_with_GenAge_coordinates_mad20k_power6.csv
 # ============================================================
+
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
 
 
 ## Step 1
@@ -344,7 +346,7 @@ saveRDS(
 
 write.csv(
   geneModuleTable,
-  "results/geneModuleTable_with_GenAge_coordinates_mad20k_power6.csv",
+  "results/01_gtex/tables/geneModuleTable_with_GenAge_coordinates_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -359,7 +361,6 @@ saveRDS(
 
 write.csv(
   gene_coordinates,
-  "results/gencode_v39_GRCh38_gene_coordinates.csv",
+  "results/01_gtex/tables/gencode_v39_GRCh38_gene_coordinates.csv",
   row.names = FALSE
 )
-

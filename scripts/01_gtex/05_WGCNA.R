@@ -6,6 +6,9 @@ library(WGCNA)
 
 options(stringsAsFactors = FALSE)
 
+dir.create("results/01_gtex/figures", recursive = TRUE, showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
+
 # WGCNA用に作った発現データを読み込む
 # datExpr は「行 = サンプル、列 = 遺伝子」の形になっている
 datExpr <- readRDS("clean/datExpr_v11_muscle_skeletal_MAD20k.rds")
@@ -58,7 +61,7 @@ sampleTree <- hclust(dist(datExpr), method = "average")
 
 
 # PDFとして保存
-pdf("results/01_sample_clustering_mad20k_no_labels.pdf", width = 10, height = 8)
+pdf("results/01_gtex/figures/01_sample_clustering_mad20k_no_labels.pdf", width = 10, height = 8)
 
 plot(sampleTree,
      main = "Sample clustering for WGCNA input QC",
@@ -103,10 +106,10 @@ traitColors <- data.frame(
 )
 
 # 保存先フォルダ
-dir.create("results", showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
 
 # 保存
-pdf("results/02_sample_clustering_traits_mad20k_no_labels.pdf", width = 12, height = 8)
+pdf("results/01_gtex/figures/02_sample_clustering_traits_mad20k_no_labels.pdf", width = 12, height = 8)
 
 plotDendroAndColors(
   sampleTree,
@@ -147,7 +150,7 @@ sft <- pickSoftThreshold(
 sft$fitIndices
 
 # 図を保存
-pdf("results/02_soft_threshold_mad20k.pdf", width = 12, height = 6)
+pdf("results/01_gtex/figures/02_soft_threshold_mad20k.pdf", width = 12, height = 6)
 
 par(mfrow = c(1, 2))
 
@@ -275,7 +278,7 @@ saveRDS(MEs, file = "clean/moduleEigengenes_mad20k_power6.rds")
 saveRDS(geneModuleTable, file = "clean/geneModuleTable_mad20k_power6.rds")
 
 write.csv(geneModuleTable,
-          file = "results/gene_module_assignment_mad20k_power6.csv",
+          file = "results/01_gtex/tables/gene_module_assignment_mad20k_power6.csv",
           row.names = FALSE)
 
 
@@ -285,7 +288,7 @@ table(moduleColors)
 dim(MEs)
 head(geneModuleTable)
 list.files("clean", pattern = "mad20k_power6")
-list.files("results", pattern = "mad20k_power6")
+list.files("results/01_gtex/tables", pattern = "mad20k_power6")
 
 
 ##Step6
@@ -362,7 +365,7 @@ dim(textMatrix) <- dim(moduleTraitCor)
 # 例：MEblue → blue
 moduleLabels <- gsub("^ME", "", names(MEs))
 
-pdf("results/04_module_trait_relationships_mad20k_power6_fixed.pdf",
+pdf("results/01_gtex/figures/04_module_trait_relationships_mad20k_power6_fixed.pdf",
     width = 10,
     height = 12)
 
@@ -396,10 +399,10 @@ saveRDS(moduleTraitPvalue,
         file = "clean/moduleTraitPvalue_AGE_SEX_mad20k_power6.rds")
 
 write.csv(moduleTraitCor,
-          file = "results/moduleTraitCor_AGE_SEX_mad20k_power6.csv")
+          file = "results/01_gtex/tables/moduleTraitCor_AGE_SEX_mad20k_power6.csv")
 
 write.csv(moduleTraitPvalue,
-          file = "results/moduleTraitPvalue_AGE_SEX_mad20k_power6.csv")
+          file = "results/01_gtex/tables/moduleTraitPvalue_AGE_SEX_mad20k_power6.csv")
 
 
 #Step7
@@ -491,7 +494,7 @@ head(allGeneInfo)
 
 # 保存先フォルダ
 dir.create("clean", showWarnings = FALSE)
-dir.create("results", showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
 
 
 # 全gene情報を保存
@@ -500,7 +503,7 @@ saveRDS(allGeneInfo, file = "clean/allGeneInfo_mad20k_power6.rds")
 
 write.csv(
   allGeneInfo,
-  file = "results/allGeneInfo_mad20k_power6.csv",
+  file = "results/01_gtex/tables/allGeneInfo_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -555,14 +558,22 @@ for (mod in target_modules) {
   # moduleごとの全候補を保存
   write.csv(
     module_df,
-    file = paste0("results/hub_candidates_", mod, "_full_mad20k_power6.csv"),
+    file = paste0(
+      "results/01_gtex/tables/hub_candidates_",
+      mod,
+      "_full_mad20k_power6.csv"
+    ),
     row.names = FALSE
   )
   
   # moduleごとのtop30を保存
   write.csv(
     top_hub,
-    file = paste0("results/hub_candidates_", mod, "_top30_mad20k_power6.csv"),
+    file = paste0(
+      "results/01_gtex/tables/hub_candidates_",
+      mod,
+      "_top30_mad20k_power6.csv"
+    ),
     row.names = FALSE
   )
   
@@ -589,7 +600,7 @@ saveRDS(
 
 write.csv(
   all_top_hubs_df,
-  file = "results/top30_hub_candidates_target_modules_mad20k_power6.csv",
+  file = "results/01_gtex/tables/top30_hub_candidates_target_modules_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -600,7 +611,7 @@ table(allGeneInfo$module)
 target_modules
 dim(all_top_hubs_df)
 head(all_top_hubs_df)
-list.files("results", pattern = "hub_candidates")
+list.files("results/01_gtex/tables", pattern = "hub_candidates")
 
 
 
@@ -642,7 +653,7 @@ dim(hub_summary_all)
 # 保存
 write.csv(
   hub_summary_all,
-  file = "results/top30_hub_candidates_summary_mad20k_power6.csv",
+  file = "results/01_gtex/tables/top30_hub_candidates_summary_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -650,4 +661,3 @@ saveRDS(
   hub_summary_all,
   file = "clean/top30_hub_candidates_summary_mad20k_power6.rds"
 )
-

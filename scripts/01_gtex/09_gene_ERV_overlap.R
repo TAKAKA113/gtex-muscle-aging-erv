@@ -75,10 +75,10 @@
 #
 # 出力：
 # clean/geneModuleTable_with_ERV_overlap_mad20k_power6.rds
-# results/geneModuleTable_with_ERV_overlap_mad20k_power6.csv
+# results/01_gtex/tables/geneModuleTable_with_ERV_overlap_mad20k_power6.csv
 # clean/promoter_ERV_pairs_mad20k_power6.rds
-# results/promoter_ERV_pairs_mad20k_power6.csv
-# results/module_ERV_overlap_descriptive_summary.csv
+# results/01_gtex/tables/promoter_ERV_pairs_mad20k_power6.csv
+# results/01_gtex/tables/module_ERV_overlap_descriptive_summary.csv
 # ============================================================
 
 
@@ -91,7 +91,8 @@ dir.create(
 )
 
 dir.create(
-  "results",
+  "results/01_gtex/tables",
+  recursive = TRUE,
   showWarnings = FALSE
 )
 
@@ -912,7 +913,7 @@ saveRDS(
 
 write.csv(
   geneModuleTable,
-  "results/geneModuleTable_with_ERV_overlap_mad20k_power6.csv",
+  "results/01_gtex/tables/geneModuleTable_with_ERV_overlap_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -927,7 +928,7 @@ saveRDS(
 
 write.csv(
   promoter_ERV_pairs,
-  "results/promoter_ERV_pairs_mad20k_power6.csv",
+  "results/01_gtex/tables/promoter_ERV_pairs_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -937,13 +938,13 @@ write.csv(
 
 write.csv(
   module_ERV_summary,
-  "results/module_ERV_overlap_descriptive_summary.csv",
+  "results/01_gtex/tables/module_ERV_overlap_descriptive_summary.csv",
   row.names = FALSE
 )
 
 write.csv(
   target_module_ERV_summary,
-  "results/target_module_ERV_overlap_descriptive_summary.csv",
+  "results/01_gtex/tables/target_module_ERV_overlap_descriptive_summary.csv",
   row.names = FALSE
 )
 

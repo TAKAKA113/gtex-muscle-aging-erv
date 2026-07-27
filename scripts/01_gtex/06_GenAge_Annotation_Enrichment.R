@@ -3,6 +3,9 @@
 #→ module全体のenrichment
 #→ hub gene候補内の既知老化geneを確認
 
+dir.create("results/01_gtex/figures", recursive = TRUE, showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
+
 ##Step1
 #GenAge Human list を取得して読む
 
@@ -266,7 +269,7 @@ module_genage_results
 # 結果を保存
 write.csv(
   module_genage_results,
-  "results/module_GenAge_enrichment_mad20k_power6.csv",
+  "results/01_gtex/tables/module_GenAge_enrichment_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -311,7 +314,7 @@ p_or <- ggplot(module_genage_results,
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
 ggsave(
-  "results/06_GenAge_enrichment_light.pdf",
+  "results/01_gtex/figures/06_GenAge_enrichment_light.pdf",
   p_or, width = 8, height = 5
 )
 
@@ -341,7 +344,7 @@ nrow(hub_genage_only)
 #保存
 write.csv(
   hub_genage_only,
-  "results/top30_hub_GenAge_only_mad20k_power6.csv",
+  "results/01_gtex/tables/top30_hub_GenAge_only_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -357,7 +360,7 @@ saveRDS(
 # WGCNA全20,000 genes
 write.csv(
   geneModuleTable,
-  "results/geneModuleTable_with_GenAge_mad20k_power6.csv",
+  "results/01_gtex/tables/geneModuleTable_with_GenAge_mad20k_power6.csv",
   row.names = FALSE
 )
 
@@ -370,7 +373,7 @@ saveRDS(
 # hub候補210 genes
 write.csv(
   hub_summary_all,
-  "results/hub_summary_with_GenAge_mad20k_power6.csv",
+  "results/01_gtex/tables/hub_summary_with_GenAge_mad20k_power6.csv",
   row.names = FALSE
 )
 

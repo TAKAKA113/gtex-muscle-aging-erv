@@ -93,15 +93,15 @@
 # 主な出力：
 # raw/E100_18_core_K27ac_hg38lift_mnemonics.bed.gz
 # raw/E108_18_core_K27ac_hg38lift_mnemonics.bed.gz
-# results/Roadmap_muscle_chromatin_state_counts.csv
-# results/Roadmap_muscle_active_enhancer_ERV_overlap_pairs.csv
+# results/01_gtex/tables/Roadmap_muscle_chromatin_state_counts.csv
+# results/01_gtex/tables/Roadmap_muscle_active_enhancer_ERV_overlap_pairs.csv
 # clean/Roadmap_muscle_active_enhancer_ERV_summary.rds
-# results/hub_Roadmap_muscle_enhancer_ERV_pairs_100kb.csv
-# results/hub_Roadmap_muscle_enhancer_ERV_gene_summary_100kb.csv
-# results/GenAge_hub_Roadmap_muscle_enhancer_ERV_summary_100kb.csv
-# results/hub_Roadmap_muscle_enhancer_ERV_priority_100kb.csv
-# figures/Step12B_Roadmap_ERV_family_by_epigenome.pdf
-# figures/Step12B_Roadmap_hub_enhancer_ERV_percent_by_module.pdf
+# results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_pairs_100kb.csv
+# results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_gene_summary_100kb.csv
+# results/01_gtex/tables/GenAge_hub_Roadmap_muscle_enhancer_ERV_summary_100kb.csv
+# results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_priority_100kb.csv
+# results/01_gtex/figures/Step12B_Roadmap_ERV_family_by_epigenome.pdf
+# results/01_gtex/figures/Step12B_Roadmap_hub_enhancer_ERV_percent_by_module.pdf
 # ============================================================
 
 
@@ -110,8 +110,8 @@
 
 dir.create("raw", showWarnings = FALSE)
 dir.create("clean", showWarnings = FALSE)
-dir.create("results", showWarnings = FALSE)
-dir.create("figures", showWarnings = FALSE)
+dir.create("results/01_gtex/tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("results/01_gtex/figures", recursive = TRUE, showWarnings = FALSE)
 
 
 ## Step 2
@@ -273,7 +273,7 @@ epigenome_metadata$local_file <- file.path(
 
 write.csv(
   epigenome_metadata,
-  "results/Roadmap_muscle_epigenome_download_metadata.csv",
+  "results/01_gtex/tables/Roadmap_muscle_epigenome_download_metadata.csv",
   row.names = FALSE
 )
 
@@ -479,7 +479,7 @@ chromatin_state_summary <- do.call(
 
 write.csv(
   chromatin_state_summary,
-  "results/Roadmap_muscle_chromatin_state_counts.csv",
+  "results/01_gtex/tables/Roadmap_muscle_chromatin_state_counts.csv",
   row.names = FALSE
 )
 
@@ -660,7 +660,7 @@ rownames(all_enhancer_ERV_pairs) <- NULL
 
 write.csv(
   all_enhancer_ERV_pairs,
-  "results/Roadmap_muscle_active_enhancer_ERV_overlap_pairs.csv",
+  "results/01_gtex/tables/Roadmap_muscle_active_enhancer_ERV_overlap_pairs.csv",
   row.names = FALSE
 )
 
@@ -738,7 +738,7 @@ saveRDS(
 
 write.csv(
   active_enhancer_ERV_summary,
-  "results/Roadmap_muscle_active_enhancer_ERV_summary.csv",
+  "results/01_gtex/tables/Roadmap_muscle_active_enhancer_ERV_summary.csv",
   row.names = FALSE
 )
 
@@ -1233,37 +1233,37 @@ saveRDS(
 
 write.csv(
   hub_enhancer_pairs,
-  "results/hub_Roadmap_muscle_enhancer_ERV_pairs_100kb.csv",
+  "results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_pairs_100kb.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_enhancer_gene_summary,
-  "results/hub_Roadmap_muscle_enhancer_ERV_gene_summary_100kb.csv",
+  "results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_gene_summary_100kb.csv",
   row.names = FALSE
 )
 
 write.csv(
   GenAge_hub_enhancer_summary,
-  "results/GenAge_hub_Roadmap_muscle_enhancer_ERV_summary_100kb.csv",
+  "results/01_gtex/tables/GenAge_hub_Roadmap_muscle_enhancer_ERV_summary_100kb.csv",
   row.names = FALSE
 )
 
 write.csv(
   hub_enhancer_priority,
-  "results/hub_Roadmap_muscle_enhancer_ERV_priority_100kb.csv",
+  "results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_priority_100kb.csv",
   row.names = FALSE
 )
 
 write.csv(
   head(hub_enhancer_priority, 50),
-  "results/hub_Roadmap_muscle_enhancer_ERV_priority_top50_100kb.csv",
+  "results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_priority_top50_100kb.csv",
   row.names = FALSE
 )
 
 write.csv(
   module_summary,
-  "results/hub_Roadmap_muscle_enhancer_ERV_summary_by_module.csv",
+  "results/01_gtex/tables/hub_Roadmap_muscle_enhancer_ERV_summary_by_module.csv",
   row.names = FALSE
 )
 
@@ -1308,7 +1308,7 @@ family_plot <- ggplot(
   )
 
 ggsave(
-  filename = "figures/Step12B_Roadmap_ERV_family_by_epigenome.pdf",
+  filename = "results/01_gtex/figures/Step12B_Roadmap_ERV_family_by_epigenome.pdf",
   plot = family_plot,
   device = grDevices::pdf,
   width = 8,
@@ -1392,7 +1392,7 @@ module_plot <- ggplot(
   )
 
 ggsave(
-  filename = "figures/Step12B_Roadmap_hub_enhancer_ERV_percent_by_module.pdf",
+  filename = "results/01_gtex/figures/Step12B_Roadmap_hub_enhancer_ERV_percent_by_module.pdf",
   plot = module_plot,
   device = grDevices::pdf,
   width = 9,
