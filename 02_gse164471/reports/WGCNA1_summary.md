@@ -1,5 +1,21 @@
 # GSE164471 WGCNA1 summary
 
+TEcount出力
+1,330 TE subfamilies
+        ↓ strict ERV filter
+478 strict ERV subfamilies
+        ↓ low-expression filter
+465 ERV subfamilies
+        ↓ VST + MAD > 0
+465 ERV subfamilies
+        ↓
+WGCNA1
+
+
+
+
+
+
 ## Dataset and input
 
 - Healthy human skeletal muscle RNA-seq: **53 samples**
