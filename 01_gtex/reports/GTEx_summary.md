@@ -102,29 +102,100 @@ The three GenAge genes found among the hub candidates were:
 
 ## ERV genomic-context analysis
 
-ERV annotations were compared with genes in the seven AGE-associated candidate modules.
+Important: **ERV expression was not included directly in the GTEx WGCNA matrix.**
+The WGCNA network was gene-only, and ERV annotation was added afterwards to examine the genomic ERV context of genes in the seven AGE-associated candidate modules.
 
-Analyses included:
+The following analyses were performed:
 
 ```text
-Promoter ERV overlap
+AGE-associated candidate module genes
+        ↓
+promoter ERV overlap
+        ↓
 ERV-family-specific promoter overlap
-Distance from gene TSS to nearest ERV fragment
-Promoter ERV enrichment/depletion by module
+        ↓
+distance from gene TSS to nearest ERV fragment
+        ↓
+module-level ERV enrichment / depletion
 ```
 
-Reference values from the genomic-context analysis:
+### Promoter ERV overlap
 
-- Promoter ERV overlap among all eligible WGCNA genes: **23.86%**
-- Median distance from annotated TSS to nearest ERV fragment: **3,803 bp**
+Among all eligible WGCNA genes:
 
-The ERV families examined were:
+```text
+promoter ERV overlap = 23.86%
+```
+
+Approximate module-level promoter ERV overlap:
+
+| Module | Genes with promoter ERV overlap |
+|---|---:|
+| greenyellow | ~24–25% |
+| blue | ~24% |
+| turquoise | ~23% |
+| red | ~20–21% |
+| midnightblue | ~19–20% |
+| darkgreen | ~19% |
+| pink | ~17% |
+
+These values were also evaluated as enrichment/depletion using odds ratios and 95% confidence intervals.
+
+### ERV family-specific overlap
+
+Promoter overlap was further separated into:
 
 ```text
 ERV1
 ERVK
 ERVL
 ERVL-MaLR
+```
+
+For each module and ERV family, enrichment/depletion was summarised using log2 odds ratios, with FDR correction.
+
+### Distance to nearest ERV
+
+For each module gene, the distance from the annotated transcription start site (TSS) to the nearest ERV fragment was calculated.
+
+```text
+Median distance across all eligible genes = 3,803 bp
+```
+
+This was used to compare whether genes in specific AGE-associated candidate modules tended to lie closer to ERV fragments than the overall WGCNA background.
+
+### Why this ERV information matters for integration
+
+GTEx provides **gene-network + genomic ERV-context evidence**, whereas GSE164471 provides **ERV expression evidence**.
+
+```text
+GTEx
+AGE-associated gene modules
++ promoter / nearby ERV annotation
+
+GSE164471
+TEcount ERV subfamily expression
++ Telescope locus expression
++ ERV–gene co-expression
+
+        ↓
+Cross-dataset integration
+```
+
+The most useful integration targets will be genes that are supported by both datasets, for example:
+
+```text
+GTEx: AGE-associated module gene with nearby/promoter ERV
++
+GSE164471: gene strongly co-expressed with the same ERV family/subfamily
++
+Telescope: corresponding ERV locus near that gene
+```
+
+A Japanese explanation of the Step10–12 ERV figures is available here:
+
+```text
+01_gtex/reports/ERV_Figure_guide_JP.md
 ```
 
 ## Current GTEx workflow
@@ -147,6 +218,8 @@ MM + GS_AGE hub ranking
 GenAge annotation
         ↓
 ERV genomic-context analysis
+        ↓
+Integration with GSE164471 ERV expression / Telescope loci
 ```
 
 ## Main numerical summary
@@ -160,3 +233,5 @@ ERV genomic-context analysis
 | Hub-gene candidates | 210 |
 | GenAge genes in WGCNA | 191 |
 | GenAge genes among hub candidates | 3 |
+| Promoter ERV overlap in eligible WGCNA genes | 23.86% |
+| Median nearest ERV distance | 3,803 bp |
