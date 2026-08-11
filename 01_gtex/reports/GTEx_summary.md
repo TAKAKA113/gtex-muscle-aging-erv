@@ -103,47 +103,43 @@ The three GenAge genes found among the hub candidates were:
 ## ERV genomic-context analysis
 
 Important: **ERV expression was not included directly in the GTEx WGCNA matrix.**
-The WGCNA network was gene-only, and ERV annotation was added afterwards to examine the genomic ERV context of genes in the seven AGE-associated candidate modules.
+The WGCNA network was gene-only, and ERV annotation was added afterwards to examine the genomic ERV context of genes in the seven AGE-associated candidate modules and their hub genes.
 
-The following analyses were performed:
+The downstream ERV analysis was performed in stages:
 
 ```text
+Step10
 AGE-associated candidate module genes
-        ↓
-promoter ERV overlap
-        ↓
-ERV-family-specific promoter overlap
-        ↓
-distance from gene TSS to nearest ERV fragment
-        ↓
-module-level ERV enrichment / depletion
+→ promoter ERV overlap
+→ ERV-family-specific enrichment/depletion
+→ distance from TSS to nearest ERV
+
+Step11
+210 hub-gene candidates
+→ MM / GS_AGE together with ERV context
+→ promoter ERV overlap among hub genes
+
+Step12A
+hub-associated ERVs
+→ genic context
+→ comparison across WGCNA modules
+
+Step12B
+hub-associated ERVs
+→ Roadmap Epigenomics annotation
+→ enhancer / regulatory chromatin context
 ```
 
-### Promoter ERV overlap
+### Step10 reference values
 
 Among all eligible WGCNA genes:
 
 ```text
 promoter ERV overlap = 23.86%
+median distance from TSS to nearest ERV = 3,803 bp
 ```
 
-Approximate module-level promoter ERV overlap:
-
-| Module | Genes with promoter ERV overlap |
-|---|---:|
-| greenyellow | ~24–25% |
-| blue | ~24% |
-| turquoise | ~23% |
-| red | ~20–21% |
-| midnightblue | ~19–20% |
-| darkgreen | ~19% |
-| pink | ~17% |
-
-These values were also evaluated as enrichment/depletion using odds ratios and 95% confidence intervals.
-
-### ERV family-specific overlap
-
-Promoter overlap was further separated into:
+ERV families examined:
 
 ```text
 ERV1
@@ -152,50 +148,80 @@ ERVL
 ERVL-MaLR
 ```
 
-For each module and ERV family, enrichment/depletion was summarised using log2 odds ratios, with FDR correction.
+### Why Step11–12 matter
 
-### Distance to nearest ERV
+Step10 asks whether ERV annotation is associated with an entire AGE-associated candidate module.
+Step11 then asks whether the same ERV context is also present among the **network hub genes**.
+Step12 further divides those hub-associated ERVs by genomic context and adds Roadmap epigenomic information.
 
-For each module gene, the distance from the annotated transcription start site (TSS) to the nearest ERV fragment was calculated.
+Thus the GTEx ERV evidence progresses from:
 
 ```text
-Median distance across all eligible genes = 3,803 bp
+AGE-associated module
+        ↓
+hub gene
+        ↓
+nearby/promoter ERV
+        ↓
+ERV genomic context
+        ↓
+Roadmap regulatory annotation
 ```
 
-This was used to compare whether genes in specific AGE-associated candidate modules tended to lie closer to ERV fragments than the overall WGCNA background.
+This is genomic/annotation evidence rather than direct ERV-expression evidence.
 
-### Why this ERV information matters for integration
+### Relevance for GSE164471 integration
 
-GTEx provides **gene-network + genomic ERV-context evidence**, whereas GSE164471 provides **ERV expression evidence**.
+GTEx and GSE164471 provide complementary evidence:
 
 ```text
 GTEx
-AGE-associated gene modules
-+ promoter / nearby ERV annotation
+Gene expression WGCNA
++ AGE-associated modules/hubs
++ ERV genomic position
++ Roadmap epigenomic annotation
 
 GSE164471
-TEcount ERV subfamily expression
-+ Telescope locus expression
+Gene + ERV subfamily expression
 + ERV–gene co-expression
-
-        ↓
-Cross-dataset integration
++ Telescope locus-level expression
 ```
 
-The most useful integration targets will be genes that are supported by both datasets, for example:
+The strongest cross-dataset candidates will be genes supported by both sides, for example:
 
 ```text
-GTEx: AGE-associated module gene with nearby/promoter ERV
-+
-GSE164471: gene strongly co-expressed with the same ERV family/subfamily
-+
-Telescope: corresponding ERV locus near that gene
+GTEx:
+AGE-associated hub gene
++ promoter/nearby ERV
++ regulatory epigenomic annotation
+
+AND
+
+GSE164471:
+strong co-expression with an ERV subfamily
++ Telescope locus from that subfamily near the same gene
 ```
 
-A Japanese explanation of the Step10–12 ERV figures is available here:
+Detailed Japanese explanations of each GTEx figure are available directly beside the figures:
 
 ```text
-01_gtex/reports/ERV_Figure_guide_JP.md
+01_gtex/results/figures/FIGURE_GUIDE_JP.md
+```
+
+The guide covers:
+
+```text
+06_GenAge_enrichment_light.pdf
+Step10_ERV_family_heatmap.pdf
+Step10_nearest_ERV_distance_boxplot.pdf
+Step10_promoter_ERV_forest.pdf
+Step10_promoter_ERV_percent.pdf
+Step11_hub_MM_GS_ERV_scatter.pdf
+Step11_hub_promoter_ERV_percent.pdf
+Step12A_hub_ERV_context_by_module.pdf
+Step12A_hub_ERV_genic_context.pdf
+Step12B_Roadmap_ERV_family_by_epigenome.pdf
+Step12B_Roadmap_hub_enhanc...pdf
 ```
 
 ## Current GTEx workflow
@@ -217,7 +243,13 @@ MM + GS_AGE hub ranking
         ↓
 GenAge annotation
         ↓
-ERV genomic-context analysis
+Step10 module-level ERV genomic context
+        ↓
+Step11 hub-level ERV genomic context
+        ↓
+Step12A genic-context annotation
+        ↓
+Step12B Roadmap epigenomic annotation
         ↓
 Integration with GSE164471 ERV expression / Telescope loci
 ```
