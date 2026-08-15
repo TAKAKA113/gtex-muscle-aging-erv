@@ -1,0 +1,10 @@
+ERV_locus	ERV_subfamily	Host_gene	WGCNA_module	bicor	Genomic_context
+HERVH_5q32b	HERVH-int	SCGB3A2	turquoise	0.944	Exonic
+HERVL_18p11.21a	HERVL-int	PIEZO2	turquoise	0.922	Intronic
+HERVH_5q35.1a	HERVH-int	GABRP	turquoise	0.914	Exonic
+HERVH_19p13.3b	HERVH-int	FUT3	turquoise	0.912	Exonic
+ERV316A3_8p11.22b	ERV3-16A3_I-int	ADAM18	turquoise	0.904	Intronic
+HERVL_3q13.31	HERVL-int	LSAMP	turquoise	0.904	Intronic
+HERVH_15q26.3b	HERVH-int	LRRK1	turquoise	0.903	Exonic
+HERVL40_12q21.31	HERVL40-int	LRRIQ1	turquoise	0.896	Intronic
+PABLA_7q21.13	PABL_A-int	CFAP69	yellow	0.873	Intronic

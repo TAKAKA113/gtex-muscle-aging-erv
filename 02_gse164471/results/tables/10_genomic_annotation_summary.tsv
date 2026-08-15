@@ -1,0 +1,9 @@
+metric	yellow	turquoise	total
+Strong coexpression pairs	3633	50252	53885
+Same chromosome	198	3109	3307
+Gene-body overlap	1	8	9
+Exon overlap	0	4	4
+Intron overlap	1	4	5
+Non-overlap + TSS <= 10 kb	0	0	0
+Paired gene is nearest	3	28	31
+Nearest gene but non-overlap	2	20	22
