@@ -170,37 +170,24 @@ Roadmap regulatory annotation
 
 This is genomic/annotation evidence rather than direct ERV-expression evidence.
 
-### Relevance for GSE164471 integration
+### Relationship to GSE164471
 
-GTEx and GSE164471 provide complementary evidence:
+GTEx and GSE164471 were analysed as complementary but independent studies:
 
 ```text
 GTEx
-Gene expression WGCNA
-+ AGE-associated modules/hubs
+Gene-only WGCNA
++ candidate age-associated modules and hubs
 + ERV genomic position
 + Roadmap epigenomic annotation
 
 GSE164471
-Gene + ERV subfamily expression
+Gene + ERV-subfamily expression
 + ERV–gene co-expression
 + Telescope locus-level expression
 ```
 
-The strongest cross-dataset candidates will be genes supported by both sides, for example:
-
-```text
-GTEx:
-AGE-associated hub gene
-+ promoter/nearby ERV
-+ regulatory epigenomic annotation
-
-AND
-
-GSE164471:
-strong co-expression with an ERV subfamily
-+ Telescope locus from that subfamily near the same gene
-```
+No formal statistical integration was performed. GTEx could not serve as a repeat-aware ERV-expression replication cohort with the input available in this project. Comparisons between the studies are therefore interpretive and are made at the Discussion level.
 
 Detailed Japanese explanations of each GTEx figure are available directly beside the figures:
 
@@ -251,7 +238,7 @@ Step12A genic-context annotation
         ↓
 Step12B Roadmap epigenomic annotation
         ↓
-Integration with GSE164471 ERV expression / Telescope loci
+Interpretation alongside GSE164471 ERV expression / Telescope results
 ```
 
 ## Main numerical summary

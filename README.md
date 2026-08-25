@@ -1,130 +1,103 @@
-# Skeletal Muscle Ageing and ERV Analysis
+# Endogenous Retroviral Expression in Human Skeletal Muscle Ageing
 
-This repository contains an MSc Bioinformatics dissertation project investigating endogenous retroviruses (ERVs) in human skeletal muscle using two complementary datasets.
+This repository contains the reproducible analysis for an MSc Bioinformatics dissertation examining endogenous retroviruses (ERVs) in human skeletal muscle at three levels: genomic context, ERV subfamily expression and individual ERV-locus expression.
 
-The project is organised as two related but analytically distinct studies rather than a formal cross-dataset integration. GTEx provides a large-scale skeletal-muscle gene co-expression and genomic ERV-context analysis, whereas GSE164471 enables direct ERV expression quantification at subfamily and individual-locus resolution.
+The project uses two complementary datasets. They were analysed independently because direct repeat-aware ERV quantification was available only for GSE164471.
 
-## Research aims
+## Study design
 
-1. Characterise age-associated gene co-expression structure in GTEx skeletal muscle and examine the genomic distribution of annotated ERV fragments around candidate genes and modules.
-2. Quantify ERV expression directly from GSE164471 skeletal-muscle RNA-seq data at subfamily and locus levels.
-3. Test whether ERV expression shows broad age association or preferential co-expression-network structure.
-4. Resolve individual ERV loci and identify locus-specific age associations and candidate ERV–gene relationships using co-expression and genomic overlap.
-
-## Datasets
-
-### Study 1: GTEx skeletal muscle
-
-- **Project:** GTEx v10
-- **Tissue:** Muscle - Skeletal
-- **Samples:** 818
-- **Input:** Gene-level RNA-seq read counts
-- **Main role:** Large-scale gene co-expression and genomic ERV-context analysis
-
-### Study 2: GSE164471 skeletal-muscle RNA-seq
-
-- **Study:** GSE164471 / SRP300916
-- **Samples:** 53 healthy skeletal-muscle samples
-- **Age range:** 22–83 years
-- **Input:** Single-end total RNA-seq reads
-- **Reference:** GRCh38 with GENCODE v26
-- **Main role:** Direct ERV expression analysis at subfamily and individual-locus resolution
-
-The original sequencing data and large intermediate files are not included in this repository.
-
-## Analysis components
-
-### 1. GTEx analysis
-
-1. Select GTEx skeletal-muscle samples.
-2. Remove low-count genes.
-3. Apply variance-stabilising transformation with DESeq2.
-4. Select the 20,000 most variable genes by median absolute deviation.
-5. Construct a signed WGCNA network.
-6. Identify age-associated candidate modules and candidate hub genes.
-7. Compare candidate genes and modules with GenAge annotations.
-8. Map annotated ERV fragments to candidate-gene genomic context.
-9. Evaluate promoter ERV overlap, nearest-ERV distance and ERV-family-specific promoter overlap.
-
-The GTEx analysis showed that ERV fragments are common around skeletal-muscle genes, including genes in age-associated candidate modules, but did not provide strong evidence for broad ERV enrichment specifically within ageing-related modules.
-
-### 2. GSE164471 analysis
-
-1. Retrieve metadata and download FASTQ files.
-2. Perform FastQC and MultiQC.
-3. Build the STAR index and align reads while retaining multimapping reads.
-4. Perform alignment and BAM quality control.
-5. Quantify genes and TE subfamilies with TEcount.
-6. Restrict the TE analysis to ERV1, ERVK and ERVL subfamilies.
-7. Construct a combined gene + ERV WGCNA network.
-8. Test module and feature associations with age.
-9. Perform functional enrichment for ERV-rich co-expression modules.
-10. Quantify individual ERV loci with Telescope.
-11. Test locus-level age association.
-12. Evaluate module-constrained ERV-locus–gene co-expression using biweight midcorrelation.
-13. Annotate genomic relationships between prioritised ERV loci and co-expressed genes.
-
-Key GSE164471 findings include:
-
-- After filtering, 465 ERV subfamilies entered the WGCNA analysis.
-- 461 of 465 ERV subfamilies were concentrated in the turquoise and yellow modules.
-- No WGCNA module or TEcount ERV subfamily showed significant age association after FDR correction.
-- Telescope retained 11,503 expressed ERV loci across 60 ERV subfamilies.
-- **MER41_5q14.3a** was the only Telescope locus significantly associated with age after FDR correction (FDR = 0.0212; estimated +25.3% expression per decade).
-- MER41_5q14.3a did not overlap an annotated gene body; the nearest annotated TSS was 17,013 bp away.
-- An independent co-expression and genomic-overlap analysis identified nine ERV–gene candidate associations, comprising four exonic and five intronic ERV loci.
-
-## Study structure
-
-The final dissertation treats GTEx and GSE164471 as two complementary studies rather than forcing direct statistical integration:
+| Study | Data | Samples | Primary analysis |
+|---|---|---:|---|
+| GTEx skeletal muscle (v10) | Gene-level counts | 818 | Gene WGCNA followed by genomic ERV-context analysis |
+| GSE164471 / SRP300916 | Single-end total RNA-seq | 53 | Repeat-aware STAR alignment, TEcount, gene–ERV WGCNA and Telescope |
 
 ```text
-Study 1: GTEx
-large-scale skeletal-muscle gene network
-+ genomic ERV annotation
-
-Study 2: GSE164471
-repeat-aware RNA-seq
-→ ERV subfamily expression
-→ WGCNA
-→ Telescope locus resolution
-→ locus-specific age and ERV–gene analyses
-
-Final interpretation
-→ compare conclusions and limitations across the two studies in the Discussion
+GTEx gene counts                         GSE164471 FASTQ
+       |                                       |
+       v                                       v
+gene-only WGCNA                     repeat-aware STAR alignment
+       |                                  /            \
+       v                                 v              v
+age-associated candidate modules      TEcount       Telescope
+       |                                 |              |
+       v                                 v              v
+promoter overlap, nearest ERV       subfamily       locus-level age and
+and ERV-family composition          WGCNA/DESeq2    ERV–gene analyses
+       \                                  /
+        \________________________________/
+                 interpretation across studies
 ```
 
-This distinction is important because ERV expression was directly quantified in GSE164471 but not in GTEx. Therefore, GTEx is not treated as a direct ERV-expression replication cohort.
+## Main findings
+
+- GTEx identified seven candidate age-associated gene modules. ERV fragments were common near skeletal-muscle genes, but promoter overlap, nearest-ERV distance and family composition did not show a consistent broad enrichment across these modules.
+- In GSE164471, 461 of 465 filtered ERV subfamilies (99.1%) were assigned to the turquoise or yellow WGCNA modules. This was a descriptive network concentration, not a formal enrichment result.
+- No WGCNA module or TEcount ERV subfamily was significantly associated with age after Benjamini–Hochberg correction.
+- Telescope retained 11,503 expressed ERV loci. **MER41_5q14.3a** was the only locus significantly associated with age (FDR = 0.0212; estimated +25.3% expression per decade).
+- An independent exploratory analysis identified nine strongly co-expressed ERV–gene pairs with direct gene-body overlap: four exonic and five intronic.
+
+These results do not support uniform ERV activation with chronological age in skeletal muscle. They instead nominate locus-specific candidates. Co-expression, proximity and overlap do not demonstrate causal regulation.
 
 ## Repository structure
 
 ```text
 gtex-muscle-aging-erv/
 ├── README.md
+├── REPRODUCIBILITY.md
 ├── 01_gtex/
 │   ├── data_description.md
 │   ├── scripts/
 │   ├── results/
 │   └── reports/
 └── 02_gse164471/
+    ├── reference_versions.md
     ├── scripts/
+    │   ├── terminal/
+    │   └── R/
     ├── results/
     └── reports/
 ```
 
-- `01_gtex/` contains the GTEx WGCNA, GenAge and genomic ERV-context analyses.
-- `02_gse164471/` contains the BlueBEAR preprocessing workflow, TEcount/Telescope quantification and downstream R analyses.
-- The previously planned `03_integration/` component was removed because no formal cross-dataset integration was performed.
+Start here:
 
-Detailed GSE164471 command-line workflow:
+- [GTEx analysis summary](01_gtex/reports/GTEx_summary.md)
+- [GSE164471 terminal pipeline](02_gse164471/reports/terminal_pipeline.md)
+- [GSE164471 final analysis summary](02_gse164471/reports/final_analysis_summary.md)
+- [Reference genome and annotation versions](02_gse164471/reference_versions.md)
+- [Reproducibility guide](REPRODUCIBILITY.md)
 
-- `02_gse164471/scripts/terminal/README.md`
-- `02_gse164471/reports/terminal_pipeline.md`
+## Analysis outline
 
-## Repository policy
+### 1. GTEx genomic-context study
 
-FASTQ files, BAM files, genome indices, Conda environments, large R objects and temporary files are excluded from version control. Scripts, compact tables, selected figures and reports are retained for reproducibility.
+1. Filter GTEx skeletal-muscle gene counts.
+2. Apply DESeq2 variance-stabilising transformation.
+3. Select the 20,000 genes with highest median absolute deviation.
+4. Construct a signed WGCNA network and identify candidate age-associated modules.
+5. Rank hub-gene candidates and compare modules with GenAge.
+6. Use GRCh38 RepeatMasker annotations to test promoter ERV overlap, nearest-ERV distance and ERV-family composition.
+7. Add gene-body and Roadmap Epigenomics context for prioritised ERV fragments.
+
+ERV expression was not quantified in GTEx; its WGCNA matrix was gene-only.
+
+### 2. GSE164471 repeat-aware expression study
+
+1. Run FastQC/MultiQC and align reads to GRCh38 with STAR while retaining multimapping reads.
+2. Quantify genes and TE subfamilies with TEcount.
+3. Retain 465 ERV1, ERVK and ERVL subfamilies and construct a combined gene–ERV WGCNA network.
+4. Test module and feature associations with age while adjusting for sex.
+5. Perform functional enrichment for the ERV-rich turquoise and yellow modules.
+6. Quantify individual ERV loci with Telescope.
+7. Test locus-level age association with DESeq2.
+8. Prioritise module-constrained ERV-locus–gene correlations and annotate their genomic relationships.
+
+## Data and repository policy
+
+Raw FASTQ files, BAM files, STAR indices, reference annotations, Conda environments, large R objects and temporary files are not version-controlled. The repository retains scripts, compact result tables, selected figures and reports needed to understand and reconstruct the workflow.
+
+The GSE164471 raw sequencing data are available through GEO/SRA under **GSE164471 / SRP300916**. GTEx data access and use remain subject to GTEx policies.
 
 ## Project status
 
-The core analytical workflow is complete. Remaining work is focused on final figure/table curation and dissertation writing rather than additional cross-dataset analysis.
+The dissertation analysis is complete. The repository represents the final analytical workflow and distinguishes confirmatory statistical results from exploratory candidate prioritisation.
+
